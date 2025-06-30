@@ -1,0 +1,22 @@
+// code uses python
+import os
+gemini_api_key = os.getenv('GEMINI_API_KEY')
+
+if gemini_api_key:
+    print(f"Gemini API Key exists and begins {gemini_api_key[:8]}")
+else:
+    print("Gemini AI API Key not set - please head to the troubleshooting guide in the setup folder")
+    
+from openai import OpenAI
+import os
+gemini = OpenAI(
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+    api_key="Your API Key" )
+question = input("Enter a Question : ")
+messages = [{"role": "user", "content": question}]
+response = gemini.chat.completions.create(model="gemini-1.5-flash", messages= messages)
+
+answer = response.choices[0].message.content
+from IPython.display import Markdown, display
+display(Markdown(question))
+display(Markdown(answer))
