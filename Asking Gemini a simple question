@@ -1,19 +1,26 @@
-// code uses python
+# Install the library first: pip install google-generativeai
 import os
+import google.generativeai as genai
+
+# Get your Gemini API key
 gemini_api_key = os.getenv('GEMINI_API_KEY')
+
 if gemini_api_key:
     print(f"Gemini API Key exists and begins {gemini_api_key[:8]}")
 else:
-    print("Gemini AI API Key not set")
-from openai import OpenAI
-import os
-gemini = OpenAI(
-    base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-    api_key="Your API Key" )
-question = input("Enter a Question : ")
-messages = [{"role": "user", "content": question}]
-response = gemini.chat.completions.create(model="gemini-1.5-flash", messages= messages)
-answer = response.choices[0].message.content
-print(f"\nQuestion: {question}")
-print(f"Answer: {answer}")
+    print("Gemini API Key not set")
 
+# Configure the API key
+genai.configure(api_key=gemini_api_key)
+
+# Create a Gemini model instance
+model = genai.GenerativeModel('gemini-1.5-pro')
+
+# Get user input
+question = input("Enter a Question: ")
+
+# Generate a response
+response = model.generate_content(question)
+
+print(f"\nQuestion: {question}")
+print(f"Answer: {response.text}")
