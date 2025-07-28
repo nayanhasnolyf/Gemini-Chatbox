@@ -1,3 +1,4 @@
+#Python
 # Install the library first: pip install google-generativeai
 import os
 import google.generativeai as genai
